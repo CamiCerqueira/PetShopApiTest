@@ -1,9 +1,11 @@
 package com.btg.PetShopTest.modules.customers.controller;
 
+import com.btg.PetShopTest.infra.exception.ClientBadRequest;
 import com.btg.PetShopTest.modules.customers.dto.CustomerRequest;
 import com.btg.PetShopTest.modules.customers.dto.CustomerResponse;
 import com.btg.PetShopTest.modules.customers.usecase.*;
 import com.btg.PetShopTest.utils.CustomerConvert;
+import com.mysql.cj.xdevapi.Client;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -60,7 +62,7 @@ public class CustomerController {
             @ApiResponse(responseCode = "400", description = "Not possible get customers")
     })
     @GetMapping("email/{email}")
-    public ResponseEntity<CustomerResponse> getCustomerByEmail(@PathVariable String email) throws BadRequestClient {
+    public ResponseEntity<CustomerResponse> getCustomerByEmail(@PathVariable String email) throws ClientBadRequest {
         return ResponseEntity.ok(findCustomer.findByEmail(email));
     }
 
@@ -70,7 +72,7 @@ public class CustomerController {
             @ApiResponse(responseCode = "400", description = "Not possible get customers")
     })
     @GetMapping("/{id}")
-    public ResponseEntity<CustomerResponse> getCustomerById(@PathVariable String id) throws BadRequestClient {
+    public ResponseEntity<CustomerResponse> getCustomerById(@PathVariable String id) throws ClientBadRequest {
         return ResponseEntity.ok(findCustomer.findById(id));
     }
 
@@ -80,7 +82,7 @@ public class CustomerController {
             @ApiResponse(responseCode = "404", description = "Not possible get customer")
     })
     @GetMapping("/name/{name}")
-    public ResponseEntity<List<CustomerResponse>> getCustomerByName(@PathVariable String name) throws BadRequestClient {
+    public ResponseEntity<List<CustomerResponse>> getCustomerByName(@PathVariable String name) throws ClientBadRequest {
         return ResponseEntity.ok(findCustomer.findByName(name));
     }
 

@@ -9,29 +9,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CreateProduct {
+public class UpdateProduct {
     @Autowired
     ProductRepository repository;
 
-    public ProductResponse execute(ProductRequest productRequest) throws Exception {
-        validateProduct(productRequest);
+    public ProductResponse execute(String id, ProductRequest productRequest) throws Exception {
+        if (repository.findProductById(id) == null) {
+            throw new Exception("Not exist product");
+        }
 
         Product product = ProductConvert.toEntity(productRequest);
+        product.setSkuId(id);
         repository.save(product);
         return ProductConvert.toResponse(product);
     }
-
-    private void validateProduct(ProductRequest productRequest) throws Exception {
-        if (productRequest.getName() == null) {
-            throw new Exception("Name is required");
-        }
-
-        if (productRequest.getQuantityStock() == null) {
-            throw new Exception("Quantity is required");
-        }
-
-        if (productRequest.getPrice() == null) {
-            throw new Exception("Price is required");
-        }
-    }
 }
+

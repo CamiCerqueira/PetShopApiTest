@@ -17,4 +17,3 @@ import org.hibernate.validator.constraints.Length;
         private String address;
         private String password;
     }
-}
