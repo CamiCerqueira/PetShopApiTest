@@ -17,4 +17,7 @@ public class DeleteCustomer {
         if (customer == null) throw new ClientBadRequest("Customer not found with ID: " + id);
         repository.delete(customer);
     }
+
+
+
 }
